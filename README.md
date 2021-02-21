@@ -292,6 +292,6 @@ Shut down all EMR clusters and S3 buckets manually in case of error.
 
 ## 10. References
 
-[1] https://hub.docker.com/r/jupyter/pyspark-notebook
-[2] https://www.startdataengineering.com/post/how-to-submit-spark-jobs-to-emr-cluster-from-airflow/
+[1] https://hub.docker.com/r/jupyter/pyspark-notebook \
+[2] https://www.startdataengineering.com/post/how-to-submit-spark-jobs-to-emr-cluster-from-airflow/ \
 [3] https://github.com/puckel/docker-airflow
