@@ -1,0 +1,8 @@
+data
+.ipynb_checkpoints
+.vscode
+*.jar
+airflow/logs
+airflow/.env
+*.pyc
+creds.cfg
