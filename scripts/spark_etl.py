@@ -128,6 +128,19 @@ def etl():
                                      col("State").alias("state"),
                                      col("Country").alias("country"))                                 
 
+    # Data Quality Check
+    if immigration_fact.count() < 1:
+        raise ValueError('Immigration Fact Table is Empty')
+
+    if person_dim.count() < 1:
+        raise ValueError('Person Dimension Table is Empty')
+
+    if demographics_dim.count() < 1:
+        raise ValueError('Demographics Dimension Table is Empty')
+
+    if weather_dim.count() < 1:
+        raise ValueError('Weather Dimension Table is Empty')
+
     immigration_fact.write.mode("overwrite").parquet("/output/immigration_fact")
     person_dim.write.mode("overwrite").parquet("/output/person_dim")
     demographics_dim.write.mode("overwrite").parquet("/output/demographics_dim")

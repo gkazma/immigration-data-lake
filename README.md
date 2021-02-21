@@ -50,6 +50,10 @@ The ETL pipeline uses a local airflow instance. The dags are defined locally and
 
 The airflow docker used is developed by puckel and is obtained from this [repository](https://github.com/puckel/docker-airflow) [3]. The LICENSE file is included in this repository under the name puckel_docker_airflow_license.txt.
 
+The airflow DAG:
+
+![alt text](airflow_dag.png "Airflow DAG")
+
 ## 3. Datasets
 
 - I94 Immigration Data: This data comes from the US National Tourism and Trade Office. A data dictionary is included in the workspace. [This](https://travel.trade.gov/research/reports/i94/historical/2016.html) is where the data comes from. There's a sample file so you can take a look at the data in csv format before reading it all in. You do not have to use the entire dataset, just use what you need to accomplish the goal you set at the beginning of the project.
