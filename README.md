@@ -32,10 +32,15 @@ The scope of the project is to build a data lake on S3. The data lake will allow
     - [9.3.2. Configure AWS for AWS CLI](#932-configure-aws-for-aws-cli)
   - [9.4. Create EMR Roles](#94-create-emr-roles)
   - [9.5. Setup Docker and Docker-Compose](#95-setup-docker-and-docker-compose)
-  - [9.6. Pyspark](#96-pyspark)
+  - [9.6. Pyspark (optional)](#96-pyspark-optional)
+  - [Download the data](#download-the-data)
   - [9.7. Setup AWS](#97-setup-aws)
   - [9.8. Airflow](#98-airflow)
   - [9.9. Reminder](#99-reminder)
+  - [Scenarios](#scenarios)
+    - [The data was increased by 100x.](#the-data-was-increased-by-100x)
+    - [The pipelines would be run on a daily basis by 7 am every day.](#the-pipelines-would-be-run-on-a-daily-basis-by-7-am-every-day)
+    - [The database needed to be accessed by 100+ people.](#the-database-needed-to-be-accessed-by-100-people)
 - [10. References](#10-references)
 
 ## 2. Project Scope
@@ -214,7 +219,7 @@ If you don't have your access key, follow the guide [here](https://docs.aws.amaz
 
 Or follow these steps:
 
-- Go to my security crendetials on aws dashboard
+- Go to my security crendentials on aws dashboard
 - Then Access Keys
 - Create new access key
 
@@ -244,7 +249,7 @@ aws iam list-roles
 
 Setup [Docker](https://docs.docker.com/engine/install/) and [Docker-Compose](https://docs.docker.com/compose/install/)
 
-### 9.6. Pyspark
+### 9.6. Pyspark (optional)
 
 Run jupyter/pyspark-notebook docker
 
@@ -262,11 +267,30 @@ Use the -v flag to persist the data generated. Map a host folder, in our case th
 docker run -it --rm -p 8888:8888 -v $(pwd):/home/jovyan/work jupyter/pyspark-notebook
 ```
 
+
+### Download the data
+
+The I94 files must be downloaded manually from udacity project because they are not available online. For this example we will use the file i94_apr16_sub.sas7bdat. Then run get_data.py file to get the weather and demographics data. It will also convert the i94 to csv and generate code mapping data file.
+
+```
+python get_data.py
+```
+
 ### 9.7. Setup AWS
 
-Make sure to download all the data from the links provided above. The country code mapping table should be copied from the I94 field description file to a csv.
+Create an IAM user with the following permission:
 
-Run this python script to setup S3 bucket and copy all the data to it.
+- AmazonS3FullAccess
+
+Create in the root directory a file called creds.cfg with the following content:
+
+```
+[AWS]
+KEY=<your aws iam user role key>
+SECRET=<your aws iam user role secret>
+```
+
+Run this python script to setup S3 bucket and copy all the data to it. Modify the bucket name in the file if needed.
 
 ```
 python infrastructure_setup.py
@@ -290,6 +314,18 @@ docker-compose -f docker-compose-LocalExecutor.yml down
 
 Shut down all EMR clusters and S3 buckets manually in case of error.
 
+### Scenarios
+
+#### The data was increased by 100x.
+
+We can increase the EMR size to handle much larger datasets.
+
+#### The pipelines would be run on a daily basis by 7 am every day.
+
+The Airflow DAG will be scheduled to run everyday at 7 am. It will retry on failure.
+#### The database needed to be accessed by 100+ people.
+
+The data can be accessed by as many people as needed by scaling up.
 ## 10. References
 
 [1] https://hub.docker.com/r/jupyter/pyspark-notebook \
