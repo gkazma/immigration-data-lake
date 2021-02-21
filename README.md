@@ -6,43 +6,43 @@ The scope of the project is to build a data lake on S3. The data lake will allow
 
 - [1. Table of Contents](#1-table-of-contents)
 - [2. Project Scope](#2-project-scope)
-- [Project Structure](#project-structure)
-- [3. Datasets](#3-datasets)
-- [4. Data Source Description](#4-data-source-description)
-  - [4.1. I94 Immigration Data](#41-i94-immigration-data)
-  - [4.2. World Temperature Data](#42-world-temperature-data)
-  - [4.3. U.S. City Demographic Data](#43-us-city-demographic-data)
-- [5. Data Exploration](#5-data-exploration)
-  - [5.1. Immigration Dataset](#51-immigration-dataset)
-  - [Demographics Data](#demographics-data)
+- [3. Project Structure](#3-project-structure)
+- [4. Datasets](#4-datasets)
+- [5. Data Source Description](#5-data-source-description)
+  - [5.1. I94 Immigration Data](#51-i94-immigration-data)
   - [5.2. World Temperature Data](#52-world-temperature-data)
-- [Data Model](#data-model)
-  - [Purpose of data model](#purpose-of-data-model)
-  - [Schema](#schema)
-  - [Immigration Facts Table](#immigration-facts-table)
-  - [Person Dimension Table](#person-dimension-table)
-  - [Demographics Dimension Table](#demographics-dimension-table)
-  - [Weather Dimension Table](#weather-dimension-table)
-- [Data Quality Checks](#data-quality-checks)
-- [Project Setup](#project-setup)
-  - [Setup environment](#setup-environment)
-  - [AWS CLI](#aws-cli)
-  - [AWS Configure](#aws-configure)
-    - [Generate Credentials](#generate-credentials)
-    - [Configure AWS for AWS CLI](#configure-aws-for-aws-cli)
-  - [Create EMR Roles](#create-emr-roles)
-  - [6.1. Setup Docker and Docker-Compose](#61-setup-docker-and-docker-compose)
-  - [6.3. Pyspark](#63-pyspark)
-  - [Setup AWS](#setup-aws)
-  - [Airflow](#airflow)
-  - [Reminder](#reminder)
-- [References](#references)
+  - [5.3. U.S. City Demographic Data](#53-us-city-demographic-data)
+- [6. Data Exploration](#6-data-exploration)
+  - [6.1. Immigration Dataset](#61-immigration-dataset)
+  - [6.2. Demographics Data](#62-demographics-data)
+  - [6.3. World Temperature Data](#63-world-temperature-data)
+- [7. Data Model](#7-data-model)
+  - [7.1. Purpose of data model](#71-purpose-of-data-model)
+  - [7.2. Schema](#72-schema)
+  - [7.3. Immigration Facts Table](#73-immigration-facts-table)
+  - [7.4. Person Dimension Table](#74-person-dimension-table)
+  - [7.5. Demographics Dimension Table](#75-demographics-dimension-table)
+  - [7.6. Weather Dimension Table](#76-weather-dimension-table)
+- [8. Data Quality Checks](#8-data-quality-checks)
+- [9. Project Setup](#9-project-setup)
+  - [9.1. Setup environment](#91-setup-environment)
+  - [9.2. AWS CLI](#92-aws-cli)
+  - [9.3. AWS Configure](#93-aws-configure)
+    - [9.3.1. Generate Credentials](#931-generate-credentials)
+    - [9.3.2. Configure AWS for AWS CLI](#932-configure-aws-for-aws-cli)
+  - [9.4. Create EMR Roles](#94-create-emr-roles)
+  - [9.5. Setup Docker and Docker-Compose](#95-setup-docker-and-docker-compose)
+  - [9.6. Pyspark](#96-pyspark)
+  - [9.7. Setup AWS](#97-setup-aws)
+  - [9.8. Airflow](#98-airflow)
+  - [9.9. Reminder](#99-reminder)
+- [10. References](#10-references)
 
 ## 2. Project Scope
 
 In the following sections we will first start by describing the datasets that we have. Afterwards we will gather the data and provide the source of every dataset. We will then do some data exploration before defining the data model. Once the data model has been provided, we will design the ELT pipeline. Scripts and instructions will be provided to upload the data into an S3 bucket and execute the pipeline on AWS.
 
-## Project Structure
+## 3. Project Structure
 
 The data exploration is done in data_exploration.ipynb and uses [pyspark docker](https://hub.docker.com/r/jupyter/pyspark-notebook) [1].
 
@@ -54,31 +54,31 @@ The airflow DAG:
 
 ![alt text](airflow_dag.png "Airflow DAG")
 
-## 3. Datasets
+## 4. Datasets
 
 - I94 Immigration Data: This data comes from the US National Tourism and Trade Office. A data dictionary is included in the workspace. [This](https://travel.trade.gov/research/reports/i94/historical/2016.html) is where the data comes from. There's a sample file so you can take a look at the data in csv format before reading it all in. You do not have to use the entire dataset, just use what you need to accomplish the goal you set at the beginning of the project.
 - World Temperature Data: This dataset came from Kaggle. You can read more about it [here](https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data).
 - U.S. City Demographic Data: This data comes from OpenSoft. You can read more about it [here](https://public.opendatasoft.com/explore/dataset/us-cities-demographics/export/).
 
-## 4. Data Source Description
+## 5. Data Source Description
 
-### 4.1. I94 Immigration Data
+### 5.1. I94 Immigration Data
 
 Each report contains international visitor arrival statistics by world regions and select countries (including top 20), type of visa, mode of transportation, age groups, states visited (first intended address only), and the top ports of entry (for select countries).
 
-### 4.2. World Temperature Data
+### 5.2. World Temperature Data
 
 This dataset contains 5 variables: the date, the average temperature, the average temperature uncertainty, the state and the country.
 
-### 4.3. U.S. City Demographic Data
+### 5.3. U.S. City Demographic Data
 
 This dataset contains 12 variables: city, state, race, count, median age, male population, female population, total population, number of veterans, foreign-born, average household size and state code.
 
-## 5. Data Exploration
+## 6. Data Exploration
 
 Our data exploration was done in our data_exploration.ipynb notebook.
 
-### 5.1. Immigration Dataset
+### 6.1. Immigration Dataset
 
 The dictionnary is obtained from the I94_SAS_Labels_Description.SAS file provided with the I-94 dataset.
 
@@ -113,7 +113,7 @@ The dictionnary is obtained from the I94_SAS_Labels_Description.SAS file provide
 | FLTNO | flight number of airline used to arrive in U.S. |
 | VISATYPE | class of admission legally admitting the non-immigrant to temporarily stay in U.S. |
 
-### Demographics Data
+### 6.2. Demographics Data
 
 | Column Name | Description |
 | :--- | :--- |
@@ -130,7 +130,7 @@ The dictionnary is obtained from the I94_SAS_Labels_Description.SAS file provide
 | Average Household Size | the average household size |
 | State Code | the two letter state code |
 
-### 5.2. World Temperature Data
+### 6.3. World Temperature Data
 
 | Column Name | Description |
 | :--- | :--- |
@@ -140,9 +140,9 @@ The dictionnary is obtained from the I94_SAS_Labels_Description.SAS file provide
 | State | state |
 | Country | country |
 
-## Data Model
+## 7. Data Model
 
-### Purpose of data model
+### 7.1. Purpose of data model
 
 We want to provide a star schema that allows analytics operations to answer questions such as:
 
@@ -151,12 +151,12 @@ We want to provide a star schema that allows analytics operations to answer ques
 - Median age of immigrants versus median age of state of arrival
 - What is the most prevalant race in state of arrival versus the country of origin
 
-### Schema
+### 7.2. Schema
 
 ![alt text](immigration-data-lake.png "Immigration Data Lake Schema")
 
 Here is the final schema of our data model.
-### Immigration Facts Table
+### 7.3. Immigration Facts Table
 
 This dataset also comes with the file I94_SAS_Labels_Descriptions.SAS that describes the labels. We extract from this file a table that maps the 3 digit country codes to the actual country names. We clean it up and create a table of mappings in csv format. It contans the following fields:
 
@@ -171,30 +171,30 @@ We also mapped the transportation type using the following mapping:
 
 The date fields like arrival date and departure date are SAS numeric fields so they were converted to datetime.
 
-### Person Dimension Table
+### 7.4. Person Dimension Table
 
 For the person dimension table we extracted the fields shown in the schema above. Using the description file, we created a country code mapping table to map the country codes to the actual country names. The person data can be linked to the immigration data using the id.
 
-### Demographics Dimension Table
+### 7.5. Demographics Dimension Table
 
 We extracted the data from the demographics data source. The demographics data can be linked to the immigration data using the state.
 
-### Weather Dimension Table
+### 7.6. Weather Dimension Table
 
 We extracted the data from the demographics data source. The weather data can be linked to the immigration data using the state.
 
-## Data Quality Checks
+## 8. Data Quality Checks
 
 In the pyspark-etl script, we throw errors if any of the fact or dimension tables has a length of 0.
 
-## Project Setup
+## 9. Project Setup
 
 These are the required steps to setup the project. Make sure to issue all commands from the root directory of the project.
 
-### Setup environment
+### 9.1. Setup environment
 
 Install pip/conda environment from data-lake-requirements.txt file
-### AWS CLI
+### 9.2. AWS CLI
 
 Follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install).
 
@@ -206,9 +206,9 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 
-### AWS Configure
+### 9.3. AWS Configure
 
-#### Generate Credentials
+#### 9.3.1. Generate Credentials
 
 If you don't have your access key, follow the guide [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config).
 
@@ -218,7 +218,7 @@ Or follow these steps:
 - Then Access Keys
 - Create new access key
 
-#### Configure AWS for AWS CLI
+#### 9.3.2. Configure AWS for AWS CLI
 
 Type the following command:
 
@@ -228,7 +228,7 @@ aws configure
 
 Enter your access key id and secret access key. Choose your region and use json for output format.
 
-### Create EMR Roles
+### 9.4. Create EMR Roles
 
 Create EMR_DefaultRole using this command:
 
@@ -240,11 +240,11 @@ Check if the roles were properly created using
 
 aws iam list-roles
 
-### 6.1. Setup Docker and Docker-Compose
+### 9.5. Setup Docker and Docker-Compose
 
 Setup [Docker](https://docs.docker.com/engine/install/) and [Docker-Compose](https://docs.docker.com/compose/install/)
 
-### 6.3. Pyspark
+### 9.6. Pyspark
 
 Run jupyter/pyspark-notebook docker
 
@@ -262,7 +262,7 @@ Use the -v flag to persist the data generated. Map a host folder, in our case th
 docker run -it --rm -p 8888:8888 -v $(pwd):/home/jovyan/work jupyter/pyspark-notebook
 ```
 
-### Setup AWS
+### 9.7. Setup AWS
 
 Make sure to download all the data from the links provided above. The country code mapping table should be copied from the I94 field description file to a csv.
 
@@ -272,7 +272,7 @@ Run this python script to setup S3 bucket and copy all the data to it.
 python infrastructure_setup.py
 ```
 
-### Airflow
+### 9.8. Airflow
 
 To run airflow docker use:
 
@@ -286,11 +286,11 @@ To shutdown airflow docker use:
 docker-compose -f docker-compose-LocalExecutor.yml down
 ```
 
-### Reminder
+### 9.9. Reminder
 
 Shut down all EMR clusters and S3 buckets manually in case of error.
 
-## References
+## 10. References
 
 [1] https://hub.docker.com/r/jupyter/pyspark-notebook
 [2] https://www.startdataengineering.com/post/how-to-submit-spark-jobs-to-emr-cluster-from-airflow/
